@@ -78,7 +78,6 @@ class PetsRestHandler extends SimpleRest {
             $statusCode = 200;
         }
         $this ->setHttpHeaders('application/json', $statusCode);
-        echo 'done';
     }
 
     // DELETE /pet/(id)
@@ -97,7 +96,6 @@ class PetsRestHandler extends SimpleRest {
         }
 
         $this ->setHttpHeaders('application/json', $statusCode);
-        echo 'done';
     }
 
     // PUT /pet/(id)
@@ -117,7 +115,6 @@ class PetsRestHandler extends SimpleRest {
         }
 
         $this ->setHttpHeaders('application/json', $statusCode);
-        echo 'done';
     }
 }
 ?>
