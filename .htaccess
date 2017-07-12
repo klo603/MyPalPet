@@ -1,0 +1,8 @@
+# Turn rewrite engine on
+Options +FollowSymlinks
+RewriteEngine on
+
+# map neat URL to internal URL
+RewriteRule ^pets$   RestController.php?task=list [nc,qsa]
+RewriteRule ^pet$   RestController.php?task=new [nc,qsa]
+RewriteRule ^pet/([0-9]+)$   RestController.php?task=single&id=$1 [nc,qsa]
