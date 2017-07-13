@@ -5,13 +5,18 @@ Class Pets {
 
     // GET /pets
     public function getAllPets(){
-        return json_decode(file_get_contents($this->petFile), true);
+        $pets = json_decode(file_get_contents($this->petFile), true);
+        foreach($pets as $key => $pet){
+            $pet['id'] = $key;
+        }
+        return $pets;
     }
 
     // GET /pet/(id)
     public function getPet($id){
         $pets = json_decode(file_get_contents($this->petFile), true);
         $pet = !empty($pets[$id]) ? $pets[$id] : false;
+        $pet['id'] = $id;
         return $pet;
     }
 

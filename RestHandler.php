@@ -4,26 +4,9 @@ require_once("Pets.php");
 
 class PetsRestHandler extends SimpleRest {
 
-    private function getPetPost(){
-        $data = (object)array();
-        $data->breed = !empty($_POST["breed"]) ? $_POST["breed"]:'';
-        $data->name = !empty($_POST["name"]) ? $_POST["name"]:'';
-        $data->age = !empty($_POST["age"]) ? $_POST["age"]:'';
-        $data->price = !empty($_POST["price"]) ? $_POST["price"]:'';
-        $data->list_date = !empty($_POST["list_date"]) ? $_POST["list_date"]:'';
-        $data->sale_date = !empty($_POST["sale_date"]) ? $_POST["sale_date"]:'';
-        return $data;
-    }
-
-    private function getPetPut(){
-        parse_str(file_get_contents("php://input"),$post_vars);
-        $data = (object)array();
-        $data->breed = !empty($post_vars["breed"]) ? $post_vars["breed"]:'';
-        $data->name = !empty($post_vars["name"]) ? $post_vars["name"]:'';
-        $data->age = !empty($post_vars["age"]) ? $post_vars["age"]:'';
-        $data->price = !empty($post_vars["price"]) ? $post_vars["price"]:'';
-        $data->list_date = !empty($post_vars["list_date"]) ? $post_vars["list_date"]:'';
-        $data->sale_date = !empty($post_vars["sale_date"]) ? $post_vars["sale_date"]:'';
+    private function getPetInput(){
+        $json = file_get_contents('php://input');
+        $data = json_decode($json);
         return $data;
     }
     // GET /pets
@@ -66,7 +49,7 @@ class PetsRestHandler extends SimpleRest {
     public function newPet() {
 
         $pets = new Pets();
-        $data = $this->getPetPost();
+        $data = $this->getPetInput();
         $rawData = $pets->newPet($data);
 
         if(empty($rawData)) {
@@ -102,7 +85,7 @@ class PetsRestHandler extends SimpleRest {
     public function updatePet($id) {
 
         $pets = new Pets();
-        $data = $this->getPetPut();
+        $data = $this->getPetInput();
         $rawData = $pets->updatePet($id,$data);
 
         if(empty($rawData)) {
